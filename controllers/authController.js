@@ -16,6 +16,12 @@ exports.registerContoller = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
     //exisitng user
+
+    // Check if email is provided
+    if (!email) {
+      return next(new errorResponse("Email is required", 400));
+    }
+
     const exisitingEmail = await userModel.findOne({ email });
     if (exisitingEmail) {
       return next(new errorResponse("Email is already register", 500));
@@ -27,7 +33,6 @@ exports.registerContoller = async (req, res, next) => {
     next(error);
   }
 };
-
 //LOGIN
 exports.loginController = async (req, res, next) => {
   try {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import axios from "axios";
 import {
   Box,
@@ -61,7 +60,7 @@ const JsConverter = () => {
         </Alert>{" "}
       </Collapse>{" "}
       <form onSubmit={handleSubmit}>
-        <Typography variant="h3"> JS Converter </Typography>
+        <Typography variant="h3"> JS Converter </Typography>{" "}
         <TextField
           placeholder="add your text"
           type="text"
@@ -73,7 +72,7 @@ const JsConverter = () => {
           onChange={(e) => {
             settext(e.target.value);
           }}
-        />
+        />{" "}
         <Button
           type="submit"
           fullWidth
@@ -86,7 +85,7 @@ const JsConverter = () => {
         <Typography mt={2}>
           not this tool ? <Link to="/"> GO BACK </Link>{" "}
         </Typography>{" "}
-      </form>
+      </form>{" "}
       {code ? (
         <Card
           sx={{
