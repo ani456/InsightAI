@@ -106,7 +106,8 @@ exports.jsconverterController = async (req, res) => {
 exports.scifiImageController = async (req, res) => {
   try {
     const { text } = req.body;
-    const response = await openai.createImage({
+    const response = await openai.images.generate({
+      model: "dall-e-3",
       prompt: `generate a scifi image of ${text}`,
       n: 1,
       size: "512x512",

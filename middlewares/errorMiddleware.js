@@ -14,6 +14,15 @@ const errorHandler = (err, req, res, next) => {
     const message = "Duplicate field value enterd";
     error = new errorResponse(message, 400);
   }
+
+  if (
+    error.code === 11000 &&
+    error.keyPattern &&
+    error.keyPattern.email === 1
+  ) {
+    return res.status(400).json({ error: "Email already exists" });
+  }
+
   //mongoose validation
   if (err.name === "ValidationError") {
     const messgae = Object.values(err.errors).map((val) => val.message);

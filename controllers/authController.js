@@ -15,19 +15,23 @@ exports.sendToken = (user, statusCode, res) => {
 exports.registerContoller = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
-    //exisitng user
 
     // Check if email is provided
     if (!email) {
       return next(new errorResponse("Email is required", 400));
     }
 
-    const exisitingEmail = await userModel.findOne({ email });
-    if (exisitingEmail) {
-      return next(new errorResponse("Email is already register", 500));
+    try {
+      const user = await userModel.create({ username, email, password });
+
+      this.sendToken(user, 201, res);
+    } catch (err) {
+      if (err.code === 11000 && err.keyPattern && err.keyValue) {
+        // Duplicate key error
+        return next(new errorResponse("Email is already registered", 500));
+      }
+      throw err; // Rethrow other errors
     }
-    const user = await userModel.create({ username, email, password });
-    this.sendToken(user, 201, res);
   } catch (error) {
     console.log(error);
     next(error);
